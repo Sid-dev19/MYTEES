@@ -154,7 +154,7 @@ function ListingInner({ title, sub, base = {}, accent = "#C6FF3D", hideGender, s
       </div>
 
       {/* mobile filter sheet */}
-      <Dialog open={filterOpen} onClose={() => setFilterOpen(false)} label="Filters" side="right" className="flex h-full w-full max-w-sm flex-col border-l-2 border-ink bg-paper">
+      <Dialog open={filterOpen} onClose={() => setFilterOpen(false)} label="Filters" side="bottom" className="flex max-h-[88vh] w-full flex-col rounded-t-[1.75rem] border-2 border-b-0 border-ink bg-paper">
         <div className="flex items-center justify-between border-b-2 border-ink bg-lime px-5 py-4"><h2 className="display text-3xl">Filters</h2><button aria-label="Close filters" data-autofocus onClick={() => setFilterOpen(false)} className="grid h-10 w-10 place-items-center rounded-full border-2 border-ink bg-white"><CloseIcon /></button></div>
         <div className="flex-1 overflow-y-auto px-5"><FilterPanel f={f} set={setF} hideGender={!!base.gender} /></div>
         <div className="grid grid-cols-2 gap-3 border-t-2 border-ink bg-white p-4">
@@ -162,7 +162,7 @@ function ListingInner({ title, sub, base = {}, accent = "#C6FF3D", hideGender, s
           <button onClick={() => setFilterOpen(false)} className="btn btn-dark !text-lime">SHOW {list.length}</button>
         </div>
       </Dialog>
-      <Dialog open={sortOpen} onClose={() => setSortOpen(false)} label="Sort" side="center" className="w-full max-w-sm rounded-2xl border-2 border-ink bg-paper p-5 shadow-popl">
+      <Dialog open={sortOpen} onClose={() => setSortOpen(false)} label="Sort" side="bottom" className="w-full rounded-t-[1.75rem] border-2 border-b-0 border-ink bg-paper p-5 pb-8">
         <h2 className="display mb-3 text-3xl">Sort by</h2>
         <div role="radiogroup" className="space-y-2">
           {SORT_OPTIONS.map((o) => (
@@ -170,7 +170,6 @@ function ListingInner({ title, sub, base = {}, accent = "#C6FF3D", hideGender, s
           ))}
         </div>
         <span className="sr-only">Current: {sortLabel}</span>
-        <Doodle name="star" color="#FF2E93" size={28} className="absolute -right-3 -top-3" />
       </Dialog>
     </>
   );

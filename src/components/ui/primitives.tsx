@@ -1,5 +1,5 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/utils";
@@ -48,8 +48,9 @@ export function Rating({ value, count, className }: { value: number; count?: num
 }
 
 /* ---------- Accessible modal / drawer ---------- */
-export function Dialog({ open, onClose, label, children, side = "center", className }: { open: boolean; onClose: () => void; label: string; children: ReactNode; side?: "center" | "right" | "top"; className?: string }) {
+export function Dialog({ open, onClose, label, children, side = "center", className }: { open: boolean; onClose: () => void; label: string; children: ReactNode; side?: "center" | "right" | "top" | "bottom"; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const controls = useDragControls();
   useEffect(() => {
     if (!open) return;
     const prev = document.activeElement as HTMLElement | null;
@@ -77,8 +78,10 @@ export function Dialog({ open, onClose, label, children, side = "center", classN
     center: { initial: { opacity: 0, scale: 0.92, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95 } },
     right: { initial: { x: "100%" }, animate: { x: 0 }, exit: { x: "100%" } },
     top: { initial: { y: "-100%" }, animate: { y: 0 }, exit: { y: "-100%" } },
+    bottom: { initial: { y: "100%" }, animate: { y: 0 }, exit: { y: "100%" } },
   }[side];
-  const pos = { center: "items-center justify-center p-4", right: "justify-end", top: "items-start" }[side];
+  const pos = { center: "items-center justify-center p-4", right: "justify-end", top: "items-start", bottom: "items-end justify-center" }[side];
+  const sheet = side === "bottom" ? { drag: "y" as const, dragListener: false, dragControls: controls, dragConstraints: { top: 0, bottom: 0 }, dragElastic: { top: 0, bottom: 0.6 }, onDragEnd: (_: unknown, i: { offset: { y: number }; velocity: { y: number } }) => { if (i.offset.y > 120 || i.velocity.y > 600) onClose(); } } : {};
 
   return (
     <AnimatePresence>
@@ -87,9 +90,12 @@ export function Dialog({ open, onClose, label, children, side = "center", classN
           <motion.div className="absolute inset-0 bg-ink/60 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} aria-hidden />
           <motion.div
             ref={ref} role="dialog" aria-modal="true" aria-label={label} tabIndex={-1}
-            {...variants} transition={{ type: "spring", damping: 28, stiffness: 300 }}
-            className={cn("relative outline-none", className)}
+            {...variants} {...sheet} transition={{ type: "spring", damping: 28, stiffness: 300 }}
+            className={cn("relative outline-none", side === "bottom" && "pb-[env(safe-area-inset-bottom)]", className)}
           >
+            {side === "bottom" && (
+              <div aria-hidden onPointerDown={(e) => controls.start(e)} className="flex shrink-0 cursor-grab touch-none justify-center py-3"><div className="h-1.5 w-12 rounded-full bg-ink/30" /></div>
+            )}
             {children}
           </motion.div>
         </div>

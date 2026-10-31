@@ -39,14 +39,14 @@ export function Hero() {
             <motion.span className="block text-sun" initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25 }}>MOOD<span className="text-lime">.</span></motion.span>
           </h1>
           <p className="mt-6 max-w-md text-lg font-bold sm:text-xl">Premium tees for people who don't do boring.</p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-wrap gap-3 max-lg:hidden">
             <Link href="/new-arrivals" className="btn btn-pop btn-lime !px-8 !py-4 text-base">SHOP THE DROP →</Link>
             <Link href="/collections/main-character-energy" className="btn btn-pop btn-light !px-8 !py-4 text-base">EXPLORE COLLECTION</Link>
           </div>
         </div>
 
-        <div className="relative mx-auto mt-6 w-full max-w-[460px] lg:max-w-none">
-          <motion.div style={l2} className="relative mx-auto aspect-[4/5] w-[78%] max-w-[420px] rotate-3 overflow-hidden rounded-[2rem] border-[3px] border-ink bg-cream shadow-[10px_10px_0_0_#0B0B0F] lg:w-[84%]">
+        <div className="relative mx-auto mt-8 w-full max-w-[460px] lg:mt-6 lg:max-w-none">
+          <motion.div style={l2} className="relative mx-auto aspect-[4/5] w-[84%] max-w-[420px] rotate-3 overflow-hidden rounded-[2rem] border-[3px] border-ink bg-cream shadow-[10px_10px_0_0_#0B0B0F] lg:w-[84%]">
             <ProductImage product={hero} priority />
             <div className="absolute inset-0 grain opacity-60" />
           </motion.div>
@@ -54,7 +54,11 @@ export function Hero() {
           <motion.div style={l3} className="absolute -right-1 top-[38%] z-10 sm:right-0"><Sticker shape="wavy" bg="#FF2E93" rotate={8} size="md">MADE FOR YOU</Sticker></motion.div>
           <motion.div style={l4} className="absolute bottom-2 left-0 z-10"><Sticker shape="hand" bg="#27E1F5" rotate={-5} size="lg">no boring tees!</Sticker></motion.div>
           <motion.div style={l3} className="absolute -top-2 right-[18%] z-10"><Doodle name="spark" color="#C6FF3D" size={46} className="animate-spinslow" /></motion.div>
-          <motion.div style={l4} className="absolute bottom-[14%] right-0 z-10"><Doodle name="smile" color="#FFD81F" size={54} className="drop-shadow-[3px_3px_0_#0B0B0F]" /></motion.div>
+          <motion.div style={l4} className="absolute bottom-[14%] right-0 z-10 max-lg:bottom-[24%]"><Doodle name="smile" color="#FFD81F" size={54} className="drop-shadow-[3px_3px_0_#0B0B0F]" /></motion.div>
+          <div className="relative z-20 mt-8 grid gap-3 lg:hidden">
+            <Link href="/new-arrivals" className="btn btn-pop btn-lime !py-4 text-base">SHOP THE DROP →</Link>
+            <Link href="/collections/main-character-energy" className="btn btn-pop btn-light !py-4 text-base">EXPLORE COLLECTION</Link>
+          </div>
         </div>
       </div>
 

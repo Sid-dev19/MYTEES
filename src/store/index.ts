@@ -6,6 +6,7 @@ import { authService } from "@/services/accountServices";
 import { productService } from "@/services/productService";
 import { couponService } from "@/services/catalogServices";
 import { FREE_SHIPPING_THRESHOLD, SHIPPING_FEE } from "@/constants";
+import { haptic } from "@/utils";
 
 export interface Toast { id: number; message: string }
 
@@ -62,6 +63,7 @@ export const useStore = create<State>((set, get) => ({
     else cart.push({ key, productId, size, color, quantity: qty });
     cartService.save(cart);
     set({ cart });
+    haptic([12, 30, 12]);
     get().toast("Added to your rotation 🔥");
   },
   removeFromCart: (key) => {
@@ -86,6 +88,7 @@ export const useStore = create<State>((set, get) => ({
       : [{ productId, addedAt: new Date().toISOString() }, ...get().wishlist];
     wishlistService.save(wishlist);
     set({ wishlist });
+    haptic(has ? 8 : [10, 40, 10]);
     get().toast(has ? "Removed from wishlist" : "Saved to your future outfits ❤️");
   },
 

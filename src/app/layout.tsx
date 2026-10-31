@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: { title: "MYTEES — Wear Your Mood.", description: SITE.description, siteName: "MYTEES", type: "website", locale: "en_IN" },
   twitter: { card: "summary_large_image" },
 };
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#6C2BFF" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#6C2BFF" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

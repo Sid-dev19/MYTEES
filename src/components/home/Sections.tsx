@@ -15,6 +15,28 @@ const trending = () => productService.listSync({ sort: "popular" }).slice(0, 10)
 const arrivals = () => productService.listSync({ sort: "newest" }).slice(0, 10);
 const best = () => productService.listSync({ isBestseller: true, sort: "popular" }).slice(0, 8);
 
+/** Instagram-story style quick-shop rail, mobile only. */
+export function StoryRail() {
+  const items = [
+    ...categories.map((c) => ({ key: c.slug, label: c.name, href: `/t-shirts?category=${c.slug}`, p: productService.listSync({ category: [c.slug] })[0] })),
+    ...moods.slice(0, 3).map((m) => ({ key: m.slug, label: m.label, href: `/t-shirts?mood=${m.slug}`, p: productService.listSync({ mood: m.slug })[0] })),
+  ];
+  return (
+    <section aria-label="Quick shop" className="border-b-2 border-ink bg-paper py-4 lg:hidden">
+      <div className="hide-scroll flex snap-x gap-4 overflow-x-auto px-4">
+        {items.map((it) => (
+          <Link key={it.key} href={it.href} className="group flex w-[72px] shrink-0 snap-start flex-col items-center gap-1.5">
+            <span className="rounded-full p-[3px] transition-transform active:scale-90" style={{ background: "conic-gradient(from 200deg,#FF2E93,#FF6B1A,#FFD81F,#C6FF3D,#27E1F5,#6C2BFF,#FF2E93)" }}>
+              <span className="block h-[62px] w-[62px] overflow-hidden rounded-full border-[3px] border-paper">{it.p && <ProductImage product={it.p} />}</span>
+            </span>
+            <span className="w-full truncate text-center text-[10px] font-extrabold uppercase tracking-wide">{it.label}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function Perks() {
   const p = [
     [<TruckIcon key="a" />, "Free shipping", "On orders above ₹999"],
@@ -56,12 +78,12 @@ export function Categories() {
   return (
     <section className="container-x py-14 sm:py-20">
       <SectionHeading title="PICK YOUR VIBE." sub="Six ways to say it without saying a word." />
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+      <div className="hide-scroll -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
         {categories.map((c, i) => {
           const dark = c.slug === "premium-cotton";
           const sample = productService.listSync({ category: [c.slug] })[0];
           return (
-            <Reveal key={c.id} delay={i * 0.05}>
+            <Reveal key={c.id} delay={i * 0.05} className="w-[72vw] shrink-0 snap-center sm:w-auto">
               <motion.div whileHover={{ rotate: i % 2 ? 1.5 : -1.5, y: -6 }} className="h-full">
                 <Link href={`/t-shirts?category=${c.slug}`} data-cursor="EXPLORE" className="group relative block aspect-[4/5] overflow-hidden rounded-[1.6rem] border-2 border-ink shadow-pop sm:aspect-[5/4] lg:aspect-[4/3]" style={{ background: catColors[c.slug] }}>
                   <div className="absolute -bottom-6 -right-6 h-[75%] w-[70%] rotate-6 overflow-hidden rounded-2xl border-2 border-ink transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105">
@@ -184,9 +206,9 @@ export function ShopByMood() {
   return (
     <section className="container-x py-14 sm:py-20">
       <SectionHeading title="SHOP BY MOOD" sub="Tell us how you feel. We'll tell you what to wear." />
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
+      <div className="hide-scroll -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 md:grid-cols-3">
         {moods.map((m, i) => (
-          <Reveal key={m.slug} delay={i * 0.05}>
+          <Reveal key={m.slug} delay={i * 0.05} className="w-[58vw] shrink-0 snap-center sm:w-auto">
             <motion.div whileHover={{ rotate: i % 2 ? -2 : 2, scale: 1.03 }}>
               <Link href={`/t-shirts?mood=${m.slug}`} className="group relative flex aspect-square flex-col justify-between overflow-hidden rounded-[1.5rem] border-2 border-ink p-4 shadow-pop sm:p-6" style={{ background: m.color, color: m.text }}>
                 <span aria-hidden className="display text-6xl sm:text-8xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">{m.emoji}</span>

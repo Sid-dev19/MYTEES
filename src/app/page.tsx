@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
-import { Banners, Bestsellers, BigMarquee, Categories, Editorial, MenWomen, NewArrivals, Perks, ShopByMood, Trending } from "@/components/home/Sections";
+import { Banners, Bestsellers, BigMarquee, Categories, Editorial, MenWomen, NewArrivals, Perks, ShopByMood, StoryRail, Trending } from "@/components/home/Sections";
 
 export const metadata: Metadata = {
   title: { absolute: "MYTEES — Wear Your Mood. Premium Gen-Z Tees" },
@@ -12,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <StoryRail />
       <Perks />
       <Trending />
       <Categories />

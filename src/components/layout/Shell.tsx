@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useStore } from "@/store";
 import { AnnouncementBar, Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { BottomNav } from "./BottomNav";
 import { CartDrawer } from "./CartDrawer";
 import { SearchOverlay } from "./SearchOverlay";
 import { Toasts } from "@/components/ui/Toasts";
@@ -20,8 +21,9 @@ export function Shell({ children }: { children: ReactNode }) {
       <a href="#main" className="sr-only z-[300] bg-lime p-3 font-bold focus:not-sr-only focus:fixed focus:left-2 focus:top-2">Skip to content</a>
       <AnnouncementBar />
       <Navbar />
-      <main id="main">{children}</main>
+      <main id="main" className={bare ? "" : "max-lg:pb-24"}>{children}</main>
       {!bare && <Footer />}
+      {!bare && <BottomNav />}
       <CartDrawer />
       <SearchOverlay />
       <Toasts />

@@ -5,7 +5,7 @@ import { useStore } from "@/store";
 export function Toasts() {
   const toasts = useStore((s) => s.toasts);
   return (
-    <div aria-live="polite" className="pointer-events-none fixed bottom-4 left-1/2 z-[150] flex w-[min(92vw,380px)] -translate-x-1/2 flex-col gap-2 sm:left-auto sm:right-6 sm:translate-x-0">
+    <div aria-live="polite" className="pointer-events-none fixed bottom-28 left-1/2 lg:bottom-4 z-[150] flex w-[min(92vw,380px)] -translate-x-1/2 flex-col gap-2 sm:left-auto sm:right-6 sm:translate-x-0">
       <AnimatePresence>
         {toasts.map((t) => (
           <motion.div

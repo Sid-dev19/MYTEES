@@ -24,7 +24,12 @@ export function writeStorage<T>(key: string, value: T) {
   }
 }
 
-export const wait = (ms = 300) => new Promise<void>((r) => setTimeout(r, ms));
+/** Tiny tactile tap on supported phones. */
+export const haptic = (ms: number | number[] = 10) => {
+  try { if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(ms); } catch { /* unsupported */ }
+};
+
+export const wait =(ms = 300) => new Promise<void>((r) => setTimeout(r, ms));
 
 export const uid = (prefix = "id") => `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 
